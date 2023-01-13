@@ -1,0 +1,12 @@
+{
+  "id": "dbf46b7f-edfa-447a-895b-048d1f3313f7",
+  "type": "app",
+  "main": "app.453204ef.js",
+  "baseVersion": "V8R4C60SPC150",
+  "requirement-number": "SR-W49-fMvH0z",
+  "requirement-name": "（整体）移动端根据openid登录",
+  "version": "2",
+  "props": {
+    "type": "login"
+  }
+}

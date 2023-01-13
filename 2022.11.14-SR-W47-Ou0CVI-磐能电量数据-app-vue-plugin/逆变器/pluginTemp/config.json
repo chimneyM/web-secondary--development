@@ -1,0 +1,20 @@
+{
+  "id": "aeaa70ac-b87a-4c5a-9210-b5b1cdc363ed",
+  "type": "app",
+  "main": "app.0f51ca8c.js",
+  "version": "2",
+  "props": {
+    "type": "customize",
+    "img": "APP_0001.png",
+    "name": "应用二开_vue",
+    "loadStyle": 0,
+    "lib": [],
+    "css_script": [],
+    "customconf": [
+      "id",
+      "配置地址"
+    ]
+  },
+  "requirement-number": "SR-W47-Ou0CVI",
+  "requirement-name": "逆变站"
+}

@@ -1,0 +1,20 @@
+{
+  "id": "140ef152-9b9b-404a-a30e-5963be3e5b83",
+  "type": "app",
+  "main": "app.26eef7d1.js",
+  "version": "2",
+  "props": {
+    "type": "customize",
+    "img": "APP_0001.png",
+    "name": "应用二开_vue",
+    "loadStyle": 0,
+    "lib": [],
+    "css_script": [],
+    "customconf": [
+      "是否派发",
+      "系统表资产ID",
+      "标签表资产ID",
+      "是否级联选择"
+    ]
+  }
+}
