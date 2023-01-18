@@ -1,26 +1,15 @@
 <template>
   <div :id="id" :ref="id" style="width: 100%; background-color: #fff">
     <div style="display: flex">
-<<<<<<< HEAD
-      <span style="line-height: 80px; margin-right: 5px; margin-left: 15px; font-weight: 700; font-size: 14px">日期选择:</span
-      ><el-date-picker
-        v-model="dataPicker"
-        type="daterange"
-        format="yyyy-MM-dd"
-        value-format="yyyy-MM-dd"
-        range-separator="至"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
-        @change="dateChange"
-        :picker-options="pickerOptions"
-      >
-=======
       <span
         style="line-height: 80px; margin-right: 5px; margin-left: 15px; font-weight: 700; font-size: 14px">日期选择:</span><el-date-picker
         v-model="dataPicker" type="daterange" format="yyyy-MM-dd" value-format="yyyy-MM-dd" range-separator="至"
         start-placeholder="开始日期" end-placeholder="结束日期" @change="dateChange" :picker-options="pickerOptions">
->>>>>>> 69eb67e03c216fa71c95da16445a144fb956b746
-      </el-date-picker>
+        <span
+          style="line-height: 80px; margin-right: 5px; margin-left: 15px; font-weight: 700; font-size: 14px">日期选择:</span><el-date-picker
+          v-model="dataPicker" type="daterange" format="yyyy-MM-dd" value-format="yyyy-MM-dd" range-separator="至"
+          start-placeholder="开始日期" end-placeholder="结束日期" @change="dateChange" :picker-options="pickerOptions">
+        </el-date-picker>
     </div>
     <p class="chartsTitle">等效时数对比图</p>
     <div style="height: 400px; width: 100%" id="contrastCharts"></div>
@@ -29,16 +18,6 @@
         已选电站在{{ this.dataPicker[0] }}至 {{ this.dataPicker[1] }}时间段内
         <br />
         累计等效时数值最大的电站为【{{ this.allData.max_equivalent_hours_name }}】，最大值为【{{
-<<<<<<< HEAD
-          isNaN(Number(this.allData.max_equivalent_hours).toFixed(2)) ? "" : Number(this.allData.max_equivalent_hours).toFixed(2) + "h"
-        }}】，
-        <br />
-        累计等效时数值最小的电站为【{{ this.allData.min_equivalent_hours_name }}】，最小值为【{{
-          isNaN(Number(this.allData.min_equivalent_hours).toFixed(2)) ? "" : Number(this.allData.min_equivalent_hours).toFixed(2) + "h"
-        }}】，
-        <br />
-        已选电站的累计等效时数平均值为【{{ isNaN(Number(this.allData.maxAvg).toFixed(2)) ? "" : Number(this.allData.maxAvg).toFixed(2) + "h" }}】
-=======
   isNaN(Number(this.allData.max_equivalent_hours).toFixed(2)) ? "" :
   Number(this.allData.max_equivalent_hours).toFixed(2) + "h"
         }}】，
@@ -50,22 +29,11 @@
         <br />
         已选电站的累计等效时数平均值为【{{ isNaN(Number(this.allData.maxAvg).toFixed(2)) ? "" : Number(this.allData.maxAvg).toFixed(2) +
         "h" }}】
->>>>>>> 69eb67e03c216fa71c95da16445a144fb956b746
       </span>
       <span v-else>
         已选设备在{{ this.dataPicker[0] }}至 {{ this.dataPicker[1] }}时间段内
         <br />
         累计等效时数值最大的设备为【{{ this.allData.max_equivalent_hours_name }}】，最大值为【{{
-<<<<<<< HEAD
-          isNaN(Number(this.allData.max_equivalent_hours).toFixed(2)) ? "" : Number(this.allData.max_equivalent_hours).toFixed(2) + "h"
-        }}】，
-        <br />
-        累计等效时数值最小的设备为【{{ this.allData.min_equivalent_hours_name }}】，最小值为【{{
-          isNaN(Number(this.allData.min_equivalent_hours).toFixed(2)) ? "" : Number(this.allData.min_equivalent_hours).toFixed(2) + "h"
-        }}】，
-        <br />
-        已选设备的累计等效时数平均值为【{{ isNaN(Number(this.allData.maxAvg).toFixed(2)) ? "" : Number(this.allData.maxAvg).toFixed(2) + "h" }}】
-=======
   isNaN(Number(this.allData.max_equivalent_hours).toFixed(2)) ? "" :
   Number(this.allData.max_equivalent_hours).toFixed(2) + "h"
         }}】，
@@ -77,7 +45,6 @@
         <br />
         已选设备的累计等效时数平均值为【{{ isNaN(Number(this.allData.maxAvg).toFixed(2)) ? "" : Number(this.allData.maxAvg).toFixed(2) +
         "h" }}】
->>>>>>> 69eb67e03c216fa71c95da16445a144fb956b746
       </span>
     </div>
   </div>
@@ -223,8 +190,8 @@ export default {
               info.push(Number(x[key]).toFixed(1))
             }
           })
-          this.yData.push(info)
-          this.name.push('离散率')
+          this.yData.unshift(info)
+          this.name.unshift('离散率')
           this.initEcharts(this.xData, this.name, this.yData);
         })
         .catch((err) => {
@@ -272,38 +239,18 @@ export default {
             if (Array.isArray(params)) {
               max = Math.max.apply(
                 Math,
-<<<<<<< HEAD
-                params.map((item) => {
-                  return item.value;
-=======
                 params.map((item, i) => {
-                  if (i != params.length - 1) {
+                  if (i != 0) {
                     return item.value;
                   }
                 }).filter(item => {
                   return item != undefined && item !== null
->>>>>>> 69eb67e03c216fa71c95da16445a144fb956b746
                 })
               );
               min = Math.min.apply(
                 Math,
-<<<<<<< HEAD
-                params.map((item) => {
-                  return item.value;
-                })
-              );
-              for (var i = 0, l = params.length; i < l; i++) {
-                avg += Number(params[i].value);
-              }
-              avg = (avg / params.length).toFixed(3);
-              relVal += `<div>&nbsp;&nbsp;&nbsp;<span>平均值</span><span style='float:right'>${avg}h&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>`;
-              for (var i = 0, l = params.length; i < l; i++) {
-                relVal += `<div>${params[i].marker}${name[i]}&nbsp;&nbsp;&nbsp;<span style='float:right;'>&nbsp;&nbsp;${
-                  params[i].value == max ? "[max]" : params[i].value == min ? "[min]" : "      "
-                }</span><span style='float:right'>${params[i].value}h</span></div>`;
-=======
                 params.map((item, i) => {
-                  if (i != params.length - 1) {
+                  if (i != 0) {
                     return item.value;
                   }
                 }).filter(item => {
@@ -315,9 +262,9 @@ export default {
                   avg += Number(params[i].value);
                 }
               }
-              avg = (avg / params.length).toFixed(3);
-              relVal += `<div>${params[params.length - 1].marker}${name[params.length - 1]}&nbsp;&nbsp;&nbsp;<span style='float:right;'>&nbsp;&nbsp;${params[params.length - 1].value == max ? "[max]" : params[params.length - 1].value == min ? "[min]" : "      "
-                }</span><span style='float:right'>${params[params.length - 1].value}%</span></div>`;
+              avg = (avg / (params.length - 1)).toFixed(3);
+              relVal += `<div>${params[0].marker}${name[0]}&nbsp;&nbsp;&nbsp;<span style='float:right;'>&nbsp;&nbsp;${params[0].value == max ? "[max]" : params[0].value == min ? "[min]" : "      "
+                }</span><span style='float:right'>${params[0].value}%</span></div>`;
               relVal += `<div>&nbsp;&nbsp;&nbsp;<span>平均值</span><span style='float:right'>${avg}h&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>`;
               for (var i = 0, l = params.length; i < l; i++) {
                 if (name[i] == '离散率') {
@@ -326,7 +273,6 @@ export default {
                   relVal += `<div>${params[i].marker}${name[i]}&nbsp;&nbsp;&nbsp;<span style='float:right;'>&nbsp;&nbsp;${params[i].value == max ? "[max]" : params[i].value == min ? "[min]" : "      "
                     }</span><span style='float:right'>${params[i].value}h</span></div>`;
                 }
->>>>>>> 69eb67e03c216fa71c95da16445a144fb956b746
               }
             }
             return relVal;
@@ -341,18 +287,24 @@ export default {
         legend: {
           align: "left",
           top: "0px",
-          right: '5%',
-          left: '5%',
+          // right: '5%',
+          // left: '5%',
           textStyle: {
             color: "#000",
             fontSize: 13,
           },
           // data: legObj,
           formatter: (params) => {
-            return name[params] + "";
+            if (name[params] == '离散率') {
+              return name[params] + "(%)";
+            } else {
+              return name[params] + "";
+            }
+
           },
           itemGap: 15,
           itemWidth: 40,
+          width: 1025,
         },
         xAxis: [
           {
@@ -534,10 +486,7 @@ export default {
   background: "#fff";
   float: left;
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> 69eb67e03c216fa71c95da16445a144fb956b746
 /deep/.el-date-editor {
   margin-top: 20px !important;
 }
