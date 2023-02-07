@@ -26,7 +26,7 @@
       </div>
       <!-- 表格 -->
       <div class="table_box" v-if="pageType == 'table'">
-         <el-table ref="tableData" :data="tableData" border :cell-style="tableRowClassName" :header-cell-style="{ background: '#ECF5FF' }" height="100%">
+         <el-table ref="tableData" v-loading="tableLoading" :data="tableData" border :cell-style="tableRowClassName" :header-cell-style="{ background: '#ECF5FF' }" height="100%">
             <el-table-column class-name="first_column" prop="time" label="时间" width="160" sortable fixed align="center"></el-table-column>
             <el-table-column class-name="second_column" prop="dispersion_rate" label="离散率（%）" min-width="120" fixed align="center"></el-table-column>
             <el-table-column class-name="third_column" label="平均等效时数" min-width="110" fixed align="center">
@@ -98,6 +98,8 @@ export default {
          datePicke: [new Date(new Date().getTime() - 3600 * 1000 * 24 * 7).getTime(), new Date().getTime()],
          // 表格数据
          tableData: [],
+         // 表格加载
+         tableLoading: false,
          // 图表
          myChart: null,
          //表头数据
@@ -133,8 +135,7 @@ export default {
       this.addDatePickerIcon();
 
       if (process.env.NODE_ENV !== "production") {
-         // this.do_EventCenter_getIds({ value: "d1ae9ab0-2678-e6db-5ced-0b01bd3eec61" });
-         this.do_EventCenter_getIds({ value: "2" });
+         this.do_EventCenter_getIds({ value: "116" });
       }
    },
 
@@ -379,7 +380,6 @@ export default {
 
          // 获取提示消息
          queryRemindInfo(this.ids, _startTime, _endTime).then((res) => {
-            this.total = res.data.num;
             let strArr = [];
             res.data.forEach((item) => {
                strArr.push(`【${item}】`);
@@ -393,39 +393,48 @@ export default {
          this.tableData = [];
          this.columnData = [];
 
+         this.tableLoading = true;
+
          let _startTime = this.datePicke[0];
          let _endTime = this.datePicke[1];
 
          _startTime = moment(_startTime).format("yyyy-MM-DD 00:00:00");
          _endTime = moment(_endTime).format("yyyy-MM-DD 23:59:59");
 
-         queryAssetByTime(this.ids, this.page, this.pageSize, _startTime, _endTime).then((res) => {
-            let resData = JSON.parse(JSON.stringify(res.data.results));
+         queryAssetByTime(this.ids, this.page, this.pageSize, _startTime, _endTime)
+            .then((res) => {
+               this.total = res.data.totalCount;
 
-            let head = Object.keys(res.data.results[0]);
+               let resData = JSON.parse(JSON.stringify(res.data.results));
 
-            head.splice(head.indexOf("time"), 1);
-            head.splice(head.indexOf("equivalent_hours_avg"), 1);
-            head.splice(head.indexOf("equivalent_hours"), 1);
-            head.splice(head.indexOf("dispersion_rate"), 1);
-            let headCopy = JSON.parse(JSON.stringify(head));
-            head = headCopy.filter((x, i) => {
-               if (x.substring(0, 2) != "PV") return x;
+               let head = Object.keys(res.data.results[0]);
+
+               head.splice(head.indexOf("time"), 1);
+               head.splice(head.indexOf("equivalent_hours_avg"), 1);
+               head.splice(head.indexOf("equivalent_hours"), 1);
+               head.splice(head.indexOf("dispersion_rate"), 1);
+               let headCopy = JSON.parse(JSON.stringify(head));
+               head = headCopy.filter((x, i) => {
+                  if (x.substring(0, 2) != "PV") return x;
+               });
+
+               this.columnData = head;
+
+               resData.forEach((item) => {
+                  if (item.time) {
+                     let times = Date.parse(new Date(item.time));
+                     item.time = moment(times).format("yyyy-MM-DD HH:mm:ss");
+                  }
+               });
+               this.$nextTick(() => {
+                  this.tableData = resData;
+                  this.$forceUpdate();
+                  this.tableLoading = false;
+               });
+            })
+            .catch(() => {
+               this.tableLoading = false;
             });
-
-            this.columnData = head;
-
-            resData.forEach((item) => {
-               if (item.time) {
-                  let times = Date.parse(new Date(item.time));
-                  item.time = moment(times).format("yyyy-MM-DD HH:mm:ss");
-               }
-            });
-            this.$nextTick(() => {
-               this.tableData = resData;
-               this.$forceUpdate();
-            });
-         });
 
          function debounce(func, ms = 1000) {
             let timer;
