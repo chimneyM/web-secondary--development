@@ -111,7 +111,11 @@ const Child = ({
     </div>
     
     <Modal 
-      width={800} 
+      width={960} 
+      style={{height: '66.7%'}}
+      bodyStyle={{
+        height: 'calc(100% - 108px)'
+      }}
       onOk={
         handleSubmit
       } 

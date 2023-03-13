@@ -16,7 +16,12 @@ const Table = ({ data, formConfig }) => {
       />
     </div>
     {isModalOpen && <Modal 
-        width={800} 
+        width={960} 
+        style={{height: '66.7%'}}
+        bodyStyle={{
+          height: 'calc(100% - 55px)'
+        }}
+        wrapClassName="map_modal" 
         title="区域或定位点" 
         footer={null}
         open={isModalOpen} 

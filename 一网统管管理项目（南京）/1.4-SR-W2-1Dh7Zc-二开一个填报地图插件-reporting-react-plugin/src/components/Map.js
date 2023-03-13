@@ -374,7 +374,7 @@ const Map = (props) => {
     })
   })
 
-  return <div style={{width: '100%',position: 'relative',height: '600px',overflow: 'hidden',...styles}}>
+  return <div style={{width: '100%',position: 'relative',height: '100%',overflow: 'hidden',...styles}}>
       {!props?.isDetail && <>
         <Button type="primary" onClick={handleAreaRange} style={{margin: '10px',zIndex: 1}}>地图划区</Button>
         <Button type="primary" onClick={handlePointerClick} style={{margin: '10px',zIndex: 1}}>标点</Button>

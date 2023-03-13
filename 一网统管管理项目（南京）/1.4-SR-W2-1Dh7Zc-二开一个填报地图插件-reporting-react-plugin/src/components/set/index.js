@@ -58,7 +58,7 @@ const Design = (props) => {
 
   return <>
     <div 
-      style={{display: (control$?.hide ? 'none' : 'flex'),alignItems: 'center',width: 50,height: 50,pointerEvents:(control$?.disabled ? 'none' : 'auto')}} 
+      style={{display: (control$?.hide ? 'none' : 'flex'),alignItems: 'center',width: 698,height: 150,pointerEvents:(control$?.disabled ? 'none' : 'auto')}} 
       onClick={()=>{
         setIsModalOpen(true)
       }}
@@ -67,7 +67,7 @@ const Design = (props) => {
         !isModalOpen &&  
         <Map 
           {...props} 
-          styles={{width: '50px',height: '50px',cursor: 'pointer'}}
+          styles={{width: '698px',height: '150px',cursor: 'pointer'}}
           isDetail={true}
           zoom={10}
           data={initData || props?.data}
@@ -79,7 +79,11 @@ const Design = (props) => {
     </div>
     
     <Modal 
-      width={800} 
+      width={960} 
+      style={{height: '66.7%'}}
+      bodyStyle={{
+        height: 'calc(100% - 55px)'
+      }}
       onOk={
         handleSubmit
       } 
